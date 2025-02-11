@@ -1,13 +1,27 @@
 import { useState } from "react";
+import { Gift} from "../App";
+import { v4 as uuid } from "uuid";
 
-interface ModalProps {
-  onClose: () => void
+interface ModalProps { 
+onClose: () => void;
+  onSave: (gift : Gift) => void;
 }
 
-export default function Modal({onClose: handleClose}: ModalProps) {
+export default function Modal({onClose: handleClose, onSave: handleSave}: ModalProps) {
   const [name, setName] = useState("");
   const [value, setValue] = useState("");
   const [image, setImage] = useState("");
+
+  const saveGift = () => {
+    if (name && value && image) {
+      handleSave({id : uuid(), name, value: parseFloat(value), image});
+    };
+    setImage("");
+    setName("");
+    setValue("");
+    handleClose();
+    };
+
   return (
     <div className="backdrop">
       <div className="modal">

@@ -2,13 +2,28 @@ import "./App.css";
 import { useState } from "react";
 import Modal from "./components/modal";
 
-const handleOpen = setShowModal(true)
-const handleClose = setShowModal(false)
+export interface Gift {
+  id: string;
+  image: string;
+  name: string;
+  value: number
+}
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+  const [gifts, setGifts] = useState<Gift[]>([]);
+
+  const handleOpen = setShowModal(true)
+  const handleClose = setShowModal(false)
+
+  const handleSave = (gifts: Gift) => {
+    setGifts([...gifts, gifts]);
+  };
+
+  
   return (
     <div className="App">
-      {showModal && <Modal onClose = {handleClose}/>}
+      {showModal && <Modal onClose = {handleClose} onSave={handleSave}/>}
     <h1>My Birthday Gifts</h1>
     <div className="cards">
       <button>Add a Gift</button>
